@@ -86,7 +86,6 @@ As shown, Thursday, Friday, and Sunday were the most profitable days of the week
 </p>
 
 ![](README-files/monthly-cafe-sales.png)
-
 <p align="center">
 This chart shows the Monthly Total Sales, with June, October, and January being the most profitable months.
 </p>
