@@ -75,6 +75,8 @@ In analyzing the cleaned dataset, there were many key insights I pulled. The mai
 I used MONTH and WEEKDAY functions within an IFERROR function to extract the month and day of the week from the Transaction Date column. Furthermore, I used a CHOOSE function to label the output of MONTH and WEEKDAY by their appropriate text month, rather than a numeric value. This was mainly done to make the charts more appealing.
 </p>
 
+***
+
 <p align="center">
  Next, to determine the most profitable day and month, I used PivotTables to produce charts that showed the Total Spent for each weekday and month.
 </p>
@@ -85,10 +87,37 @@ I used MONTH and WEEKDAY functions within an IFERROR function to extract the mon
 As shown, Thursday, Friday, and Sunday were the most profitable days of the week when accounting for all total sales.
 </p>
 
+***
+
 ![](README-files/monthly-cafe-sales.png)
 <p align="center">
 This chart shows the Monthly Total Sales, with June, October, and January being the most profitable months.
 </p>
+
+***
+
+<p align="center">
+Other analyses included a plethora of key insights, including counts of cafe products sold, payment methods, and quantities of products sold per transaction. However, one insight I was particularly drawn to was transactions where quantity was greater than 1.
+</p>
+
+<p align="center">
+I calculated cafe products sold where quantity, or QTY, was over 1 by using a COUNTIFS function, that determined each type of cafe product sold where QTY>1. When calculated, the order of products sold from most to least was:
+</p>
+
+1. Coffee
+2. Salad
+3. Tea
+4. Cookie
+5. Juice
+6. Cake
+7. Sandwich
+8. Smoothie
+
+<p align="center">
+When I did summary statistics on this filtered dataset, however, I found that the most repeated value for QTY was 5. This surprised me, so I decided to dig deeper. I used the same COUNTIFS function, but instead I found products where QTY=5.
+</p>
+
+
 
 ## Reflections
 - Challenges we faced
