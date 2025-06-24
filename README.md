@@ -39,7 +39,7 @@ Key actions include:
 This allowed me to clear up much of the missing rows, leaving only Transaction Date, Location, and Payment Method to deal with.
 </p>
 
-![](README-files/Excel-Live-Tracker.png)
+![](README-files/Excel-Live-Tracker4.png)
 
 1. Convert ERROR and UNKNOWN entries for all rows to blanks by filtering each column and replacing them with " ".									
 2. Filtered Items Column to blank, filtered PPU Column to $1, $1.5, $2, & $5 respectively and filled filtered rows with IF functions to match items with PPU.									
