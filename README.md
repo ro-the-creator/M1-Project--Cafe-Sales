@@ -15,16 +15,131 @@ Our team was hired by the owner of a popular café chain to clean and explore th
 - Duplicate handling
 - Any columns dropped or imputed (and why)
 
-### Excel Cleaning
+### Excel
+- Cleaning done by Ro
 
-To make the cleaning process easier, I first created a live Missing Value Tracker,
+<p align="center">
+To make the cleaning process easier, I first created a live Missing Value Tracker. I used COUNTBLANK functions for every column to count missing cells, and used conditional formatting to display green if there are no blanks, or red if there are blanks.
+</p>
 
+![](README-files/Excel-Live-Tracker.png)
+
+<p align="center">
+Once I had a live tracker, I began cleaning the data.
+</p> 
+
+***
+Key actions include: 
+
+- converting all UNKNOWN and ERROR rows to blanks.
+- Filling in empty rows for Item, Quantity, Price Per Unit, and Total Spent through mathematical functions.
+- Filling in 20 missing rows for the Total Spent column using the average value of Total Spent per each Item, which allows me to fill in Quantity.
+- Dropping 5 rows due to missing Item and Price Per Unit values.
+
+***
+
+<p align="center">
+This allowed me to clear up much of the missing rows, leaving only Transaction Date, Location, and Payment Method to deal with.
+</p>
+
+![](README-files/Excel-Live-Tracker4.png)
+
+<p align="center">
+A full list of cleaning steps are detailed below
+</p>
+  
+1. Convert ERROR and UNKNOWN entries for all rows to blanks by filtering each column and replacing them with " ".									
+2. Filtered Items Column to blank, filtered PPU Column to $1, $1.5, $2, & $5 respectively and filled filtered rows with IF functions to match items with PPU.									
+3. Filtered PPU Column to blank, Filtered Items Column to each item to fill filtered rows with IF functions to match PPU with items.									
+4. Filtered QTY Column and PPU Column to remove blanks, changed Total Spent Row to functions for those filtered rows.									
+5. Filtered Total Spent Column and QTY Column to remove blanks, Filtered PPU Column to blanks, changed to functions for those filtered rows. --> prevents function overlap.									
+6. Filtered Total Spent Column and PPU Column to remove blanks, Filtered QTY Column to blanks, changed to functions for those filtered rows. --> prevents function overlap.									
+7. Dropped rows 1763, 2291, 3781, 4154, 7599 due to no Item name, PPU.									
+8. Filled the 20 missing rows for Total Spent with Average Total Spent, for each matching Item, marked with orange									
+9. Filled Transaction Date, Location, and Payment Method Columns with UNKNOWN using search and filter for filtered range
 
 ## Key Findings
 - Summary stats (mean, median, etc.)
 - Insights from trends by month/day
 - Additional analysis looked at
 - Any bonus feature engineering
+
+### Excel
+- Analysis done by Ro
+
+<p align="center">
+In analyzing the cleaned dataset, there were many key insights I pulled. The main factors in question—busiest and most profitable day and month—were determined in varying methods. To begin exploring these questions, however, the dataset required the creation of new columns to determine the month and day of the week of the Transaction Dates.
+</p> 
+
+<p align="center">
+I used MONTH and WEEKDAY functions within an IFERROR function to extract the month and day of the week from the Transaction Date column. Furthermore, I used a CHOOSE function to label the output of MONTH and WEEKDAY by their appropriate text month, rather than a numeric value. This was mainly done to make the charts more appealing.
+</p>
+
+***
+
+<p align="center">
+ Next, to determine the most profitable day and month, I used PivotTables to produce charts that showed the Total Spent for each weekday and month.
+</p>
+
+![](README-files/cafe-sales-weekday.png)
+
+<p align="center">
+As shown, Thursday, Friday, and Sunday were the most profitable days of the week when accounting for all total sales.
+</p>
+
+***
+
+![](README-files/monthly-cafe-sales.png)
+<p align="center">
+This chart shows the Monthly Total Sales, with June, October, and January being the most profitable months.
+</p>
+
+***
+
+<p align="center">
+Other analyses included a plethora of key insights, including counts of cafe products sold, payment methods, and quantities of products sold per transaction. However, one insight I was particularly drawn to was transactions where quantity was greater than 1.
+</p>
+
+<p align="center">
+I calculated cafe products sold where quantity, or QTY, was over 1 by using a COUNTIFS function, which determined each type of cafe product sold where QTY > 1. When calculated, the order of products sold from most to least was:
+</p>
+
+1. Coffee
+2. Salad
+3. Tea
+4. Cookie
+5. Juice
+6. Cake
+7. Sandwich
+8. Smoothie
+
+<p align="center">
+When I did summary statistics on this filtered dataset, however, I found that the most repeated value for QTY was 5. This surprised me, so I decided to dig deeper. I used the same COUNTIFS function, but instead I found products where QTY = 5.
+</p>
+
+***
+
+![](README-files/QTY5.png)
+<p align="center">
+As shown, the rankings of most of the sold products changed when QTY = 5. The new order entailed:
+</p>
+
+1. Coffee
+2. Salad
+3. Cake
+4. Sandwich
+5. Tea
+6. Cookie
+7. Smoothie
+8. Juice
+
+<p align="center">
+Furthermore, the ratio of QTY = 5 to QTY > 1 shows that transactions where QTY = 5 accounted for 26% of all transactions where QTY > 1.
+</p>
+
+<p align="center">
+This is a significant portion—over a quarter of the filtered dataset—that consisted of many products sold in one transaction.
+</p>
 
 ## Reflections
 - Challenges we faced
