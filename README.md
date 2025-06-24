@@ -90,8 +90,21 @@ As shown, Thursday, Friday, and Sunday were the most profitable days of the week
 ***
 
 ![](README-files/monthly-cafe-sales.png)
+
 <p align="center">
 This chart shows the Monthly Total Sales, with June, October, and January being the most profitable months.
+</p>
+
+***
+
+<p align="center">
+The next factor in question—busiest day and month—was calculated by measuring transactions where quantity was greater than 2. This assumption was made because orders with higher quantities take longer to prepare, likely resulting in higher wait times and busier hours.
+</p>
+
+![](README-files/Busiest-Day-Month.png)
+
+<p align="center">
+As shown, we can see that Friday, Sunday, and Tuesday are the busiest days, respectively. For months, October, December, and April are the busiest months, respectively.
 </p>
 
 ***
