@@ -45,7 +45,7 @@ This allowed me to clear up much of the missing rows, leaving only Transaction D
 ![](README-files/Excel-Live-Tracker4.png)
 
 <p align="center">
-A full list of cleaning step are detailed below
+A full list of cleaning steps are detailed below
 </p>
   
 1. Convert ERROR and UNKNOWN entries for all rows to blanks by filtering each column and replacing them with " ".									
@@ -63,6 +63,33 @@ A full list of cleaning step are detailed below
 - Insights from trends by month/day
 - Additional analysis looked at
 - Any bonus feature engineering
+
+### Excel
+- Analysis done by Ro
+
+<p align="center">
+In analyzing the cleaned dataset, there were many key insights I pulled. The main factors in question—busiest and most profitable day and month—were determined in varying methods. To begin exploring these questions, however, the dataset required the creation of new columns to determine the month and day of the week of the Transaction Dates.
+</p> 
+
+<p align="center">
+I used MONTH and WEEKDAY functions within an IFERROR function to extract the month and day of the week from the Transaction Date column. Furthermore, I used a CHOOSE function to label the output of MONTH and WEEKDAY by their appropriate text month, rather than a numeric value. This was mainly done to make the charts more appealing.
+</p>
+
+<p align="center">
+ Next, to determine the most profitable day and month, I used PivotTables to produce charts that showed the Total Spent for each weekday and month.
+</p>
+
+![](README-files/cafe-sales-weekday.png)
+
+<p align="center">
+As shown, Thursday, Friday, and Sunday were the most profitable days of the week when accounting for all total sales.
+</p>
+
+![](README-files/monthly-cafe-sales.png)
+
+<p align="center">
+This chart shows the Monthly Total Sales, with June, October, and January being the most profitable months.
+</p>
 
 ## Reflections
 - Challenges we faced
