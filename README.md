@@ -104,7 +104,7 @@ The next factor in question—busiest day and month—was calculated by measurin
 ![](README-files/Busiest-Day-Month.png)
 
 <p align="center">
-As shown, we can see that Friday, Sunday, and Tuesday are the busiest days, respectively. For months, October, December, and April are the busiest months, respectively.
+As shown, we can see that Friday, Sunday, and Tuesday are the busiest days, shown in order by the colors gold, silver, and bronze. For months, October, December, and April are the busiest months, similarly in color.
 </p>
 
 ***
