@@ -101,7 +101,7 @@ Other analyses included a plethora of key insights, including counts of cafe pro
 </p>
 
 <p align="center">
-I calculated cafe products sold where quantity, or QTY, was over 1 by using a COUNTIFS function, that determined each type of cafe product sold where QTY>1. When calculated, the order of products sold from most to least was:
+I calculated cafe products sold where quantity, or QTY, was over 1 by using a COUNTIFS function, which determined each type of cafe product sold where QTY > 1. When calculated, the order of products sold from most to least was:
 </p>
 
 1. Coffee
@@ -114,10 +114,32 @@ I calculated cafe products sold where quantity, or QTY, was over 1 by using a CO
 8. Smoothie
 
 <p align="center">
-When I did summary statistics on this filtered dataset, however, I found that the most repeated value for QTY was 5. This surprised me, so I decided to dig deeper. I used the same COUNTIFS function, but instead I found products where QTY=5.
+When I did summary statistics on this filtered dataset, however, I found that the most repeated value for QTY was 5. This surprised me, so I decided to dig deeper. I used the same COUNTIFS function, but instead I found products where QTY = 5.
 </p>
 
+***
 
+![](README-files/QTY5.png)
+<p align="center">
+As shown, the rankings of most of the sold products changed when QTY = 5. The new order entailed:
+</p>
+
+1. Coffee
+2. Salad
+3. Cake
+4. Sandwich
+5. Tea
+6. Cookie
+7. Smoothie
+8. Juice
+
+<p align="center">
+Furthermore, the ratio of QTY = 5 to QTY > 1 shows that transactions where QTY = 5 accounted for 26% of all transactions where QTY > 1.
+</p>
+
+<p align="center">
+This is a significant portion—over a quarter of the filtered dataset—that consisted of many products sold in one transaction.
+</p>
 
 ## Reflections
 - Challenges we faced
