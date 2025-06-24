@@ -28,6 +28,7 @@ To make the cleaning process easier, I first created a live Missing Value Tracke
 Once I had a live tracker, I began cleaning the data.
 </p> 
 
+***
 Key actions include: 
 
 - converting all UNKNOWN and ERROR rows to blanks.
@@ -35,12 +36,18 @@ Key actions include:
 - Filling in 20 missing rows for the Total Spent column using the average value of Total Spent per each Item, which allows me to fill in Quantity.
 - Dropping 5 rows due to missing Item and Price Per Unit values.
 
+***
+
 <p align="center">
 This allowed me to clear up much of the missing rows, leaving only Transaction Date, Location, and Payment Method to deal with.
 </p>
 
 ![](README-files/Excel-Live-Tracker4.png)
 
+<p align="center">
+A full list of cleaning step are detailed below
+</p>
+  
 1. Convert ERROR and UNKNOWN entries for all rows to blanks by filtering each column and replacing them with " ".									
 2. Filtered Items Column to blank, filtered PPU Column to $1, $1.5, $2, & $5 respectively and filled filtered rows with IF functions to match items with PPU.									
 3. Filtered PPU Column to blank, Filtered Items Column to each item to fill filtered rows with IF functions to match PPU with items.									
@@ -50,8 +57,6 @@ This allowed me to clear up much of the missing rows, leaving only Transaction D
 7. Dropped rows 1763, 2291, 3781, 4154, 7599 due to no Item name, PPU.									
 8. Filled the 20 missing rows for Total Spent with Average Total Spent, for each matching Item, marked with orange									
 9. Filled Transaction Date, Location, and Payment Method Columns with UNKNOWN using search and filter for filtered range
-
-
 
 ## Key Findings
 - Summary stats (mean, median, etc.)
