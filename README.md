@@ -1,12 +1,21 @@
-# Descriptive Project Title i.e. "Cafe Financial Analysis & Insights"
+# Café Le Marcy Financial Analysis & Insights
+
+**Work Done by:**
+
+- Rolando (Ro) Mancilla-Rojas
+- Thomas Segal
+- Adebola (Debo) Odutola
 
 ## Project Overview
 
-Our team was hired by the owner of a popular café chain to clean and explore their transaction data in preparation for new marketing initiatives. The dataset was initially messy and inconsistent, making analysis difficult. Our goal was to identify peak sales periods, explore general sales trends, and ensure the data's reliability to provide clear, actionable recommendations for the business.Identify peak sales periods, explore general sales trends, and ensure the data's reliability to provide clear, actionable recommendations for the business.
-## Business Questions
-- What are the peak sales months?
-- Are weekends busier than weekdays?
-- Any other findings stand out and relevant to the stakeholders?
+<p align="center">
+Our team was hired by the owner of the popular café chain, Café Le Marcy, to clean and perform exploratory analysis on their transaction data for the year 2023. With hopes of providing sound advice on new marketing initiatives, our goals were to identify peak sales periods and general sales trends, and ensure the reliability of the datasets to provide key, actionable insights. In cleaning and analyzing the data, our team was able to pull impactful information that could greatly benefit Café Le Marcy.
+</p>
+
+### Aims
+- Peak Sales Months/Weekdays
+- Weekday vs. Weekend sales; which is greater?
+- Deep Dive into Transactions with Quantity (QTY) > 1
 - How reliable was the data?  What cleaning was needed?
 
 ## Data Cleaning Summary
@@ -175,3 +184,7 @@ This is a significant portion—over a quarter of the filtered dataset—that co
 │   ├── 01_data_cleaning.ipynb
 │   ├── 02_eda_insights.ipynb
 │   └── README.md
+```
+
+> [!NOTE]
+>  This is a fictitious scenario created by the GitHub authors for academic purposes only.
