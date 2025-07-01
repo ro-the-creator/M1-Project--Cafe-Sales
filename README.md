@@ -350,35 +350,69 @@ print("\nTotal Revenue by Item:\n", item_revenue.head(10))
 Using these methods, many of the analyses done in Excel aligned with the conclusions pulled using Python notebooks. However, effective visualizations could still be used to display slight differences found, mainly due to differences in the approach to cleaning the dataset between Ro and Debo. This was done intentionally to see if these differences accounted for a large margin of error.
 </p>
 
+***
+
 <p align="center">
 Next, the sns and plt libraries were used to produce effective visuals concerning the data. A key visual insight created using these libraries included the Top 10 Items sold, sorted in descending order:
 </p>
 
+![](README-files/top10-items-python.png)
+
+<p align="center">
+As shown, Coffee, Salad, and Cookies were the top 3 selling items at Café Le Marcy.
+</p> 
+
+***
+
+The Codeblock used to produce the chart:
 ```c++
+top_items = cafeData['Item'].value_counts().head(10).reset_index()
+top_items.columns = ['Item', 'Count']
 
-
-## Reflections
-- Challenges we faced
-- Any biases
-- What we would do differently next time
+plt.figure(figsize=(10, 5))
+sns.set_theme(font="Times New Roman", font_scale=1.2)
+sns.barplot(data=top_items, x='Item', y='Count', hue='Item', palette='YlOrBr', legend=False)
+plt.title("Top 10 Items by Quantity Sold")
+plt.ylabel("Number Sold")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+```
 
 ## Takeaways & Recommendations
-- What can you tell the cafe owner and why should they care
+<p align="center">
+There were many key insights pulled from the data.
+</p>
 
-## Folder Structure (EXAMPLE ONLY)
-```text
-.
-├── data/
-│   ├── raw/
-│   └── cleaned/
-├── excel/
-│   ├── analysis_workbook.xlsx
-│   └── cleaning_template.xlsx
-├── notebooks/
-│   ├── 01_data_cleaning.ipynb
-│   ├── 02_eda_insights.ipynb
-│   └── README.md
-```
+For starters, there seemed to be a big issue regarding the data collection, particularly with the Payment Method and Transaction Location columns. Our team recommends looking into into why there seems to be many errors when collecting this information.
+
+<p align="center">
+In regards to our original aims, we found a consistent answer for the busiest and most profitable days and months for the business. 
+</p> 
+
+For the most profitable days and months, the total revenue for these specific dates showed that **Thursday**, **Friday**, and **Sunday** were the highest-earning days, respectively, while **June**, **October**, and **January** were, in ranked order, the highest-earning months.
+
+For the busiest days in the month and day, we made the assumption that Transactions where the Quantity was greater than 1 would be attributed to busier days, as it would take longer to produce these items. Therefore, we found that **October**, **December**, and **April** were the busiest months, in order. We also found that **Friday**, **Sunday**, and **Tuesday** were the busiest days, respectively.
+
+It is interesting to note that the most profitable days and months didn't fully align with the busiest days and months, likely due to the types of items sold and their varying prices. However, the days certainly aligned with our fortified conclusion that **weekdays are busier than weekends.**
+
+***
+
+Lastly, our aim to dive deep into transactions with quantities over 1 yielded surprising results. We recommend that, since transactions with quantities of 5 accounted for just over 25% of the transactions with quantities greater than 1, that there should be an emphasis placed in creating an efficent system of outputing high quantity orders. This alone could decrease work costs, produce higher day-to-day profits, and increase ratings.
+
+<p align="center">
+However, if this is too much, we simply recommend creating deals that encourage less quantities, as to maintain a better workflow. One possible deal could be pairing sandwiches with smoothies, as they are both low-selling items and could potentially boost the bottom line.
+</p> 
+
+## Reflections
+
+<p align="center">
+As we worked with this dataset, we ran into many problems that were great points of learning. Some of the biggest issues we ran into were communicating, particularly within GitHub. I believe we could've prepared stronger slides, and thus, a stronger presentation, had we communicated and prepared accordingly.
+</p>
+
+<p align="center">
+Overall, however, this experience was one we all thoroughly enjoyed. We hope to work again, stronger and more impactful having learned these lessons.
+
 
 > [!NOTE]
 >  This is a fictitious scenario created by the GitHub authors for academic purposes only.
