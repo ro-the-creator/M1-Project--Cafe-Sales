@@ -210,16 +210,10 @@ for index, row in cafeData.iterrows():
 ```
 
 <p align="center">
-This ensured the data was as clean as possible, using all possible logical mathematical equations to fill in missing rows.
+This ensured the data was as clean as possible, using all possible logical mathematical equations used to fill in missing rows.
 </p>
 
-***
-
 ## Key Findings
-- Summary stats (mean, median, etc.)
-- Insights from trends by month/day
-- Additional analysis looked at
-- Any bonus feature engineering
 
 ### Excel
 - Analysis done by Ro
@@ -310,6 +304,58 @@ Furthermore, the ratio of QTY = 5 to QTY > 1 shows that transactions where QTY =
 <p align="center">
 This is a significant portion—over a quarter of the filtered dataset—that consisted of many products sold in one transaction.
 </p>
+
+***
+
+### Python
+- Analysis done by Debo
+
+After importing the cleaned CSV into a new notebook, functions such as `.crosstab`, `.value_counts`, and `.isin` were among the top functions used to view the dataset in various filtered methods. Not only did this help bring a deeper understanding of the dataset, this also set up variables that could be used to visualize later.
+
+<p align="center">
+Some key code lines include:
+</p>
+
+```c++
+# Table looking at quantity purchased vs Item
+pd.crosstab(cafeData["Quantity"], cafeData['Item'])
+
+# Total revenue
+total_revenue = cafeData['Total Spent'].sum()
+
+# Average spend per transaction
+average_spend = cafeData['Total Spent'].mean()
+
+# Total quantity sold
+total_quantity = cafeData['Quantity'].sum()
+
+# Top 5 items sold
+top_items = cafeData['Item'].value_counts().head(5)
+
+print("Total Revenue:", total_revenue)
+print("Average Spend per Transaction:", average_spend)
+print("Total Quantity Sold:", total_quantity)
+print("Top 5 Most Sold Items:\n", top_items)
+```
+
+```c++
+item_quantity = cafeData.groupby('Item')['Quantity'].sum().sort_values(ascending=False)
+item_revenue = cafeData.groupby('Item')['Total Spent'].sum().sort_values(ascending=False)
+
+print("Total Quantity Sold by Item:\n", item_quantity.head(10))
+print("\nTotal Revenue by Item:\n", item_revenue.head(10))
+```
+
+<p align="center">
+Using these methods, many of the analyses done in Excel aligned with the conclusions pulled using Python notebooks. However, effective visualizations could still be used to display slight differences found, mainly due to differences in the approach to cleaning the dataset between Ro and Debo. This was done intentionally to see if these differences accounted for a large margin of error.
+</p>
+
+<p align="center">
+Next, the sns and plt libraries were used to produce effective visuals concerning the data. A key visual insight created using these libraries included the Top 10 Items sold, sorted in descending order:
+</p>
+
+```c++
+
 
 ## Reflections
 - Challenges we faced
