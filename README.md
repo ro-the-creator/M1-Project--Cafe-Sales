@@ -13,16 +13,12 @@ Our team was hired by the owner of the popular café chain, Café Le Marcy, to c
 </p>
 
 ### Aims
+- Data Cleaning & Maintaining Reliability
 - Peak Sales Months/Weekdays
 - Weekday vs. Weekend sales; which is greater?
 - Deep Dive into Transactions with Quantity (QTY) > 1
-- How reliable was the data?  What cleaning was needed?
 
 ## Data Cleaning Summary
-- Data type corrections made
-- Missing data handling strategy
-- Duplicate handling
-- Any columns dropped or imputed (and why)
 
 ### Excel
 - Cleaning done by Ro
@@ -66,6 +62,158 @@ A full list of cleaning steps are detailed below
 7. Dropped rows 1763, 2291, 3781, 4154, 7599 due to no Item name, PPU.									
 8. Filled the 20 missing rows for Total Spent with Average Total Spent, for each matching Item, marked with orange									
 9. Filled Transaction Date, Location, and Payment Method Columns with UNKNOWN using search and filter for filtered range
+
+***
+
+### Python
+- Cleaning done by Debo
+
+To begin cleaning the data, more information regarding the dataset must be obtained. After loading the CSV file using the Pandas library, a `.info` function was used to give an initial overview of the data.
+
+Output:
+```c++
+RangeIndex: 10000 entries, 0 to 9999
+Data columns (total 8 columns):
+ #   Column            Non-Null Count  Dtype 
+---  ------            --------------  ----- 
+ 0   Transaction ID    10000 non-null  object
+ 1   Item              9667 non-null   object
+ 2   Quantity          9862 non-null   object
+ 3   Price Per Unit    9821 non-null   object
+ 4   Total Spent       9827 non-null   object
+ 5   Payment Method    7421 non-null   object
+ 6   Location          6735 non-null   object
+ 7   Transaction Date  9841 non-null   object
+dtypes: object(8)
+memory usage: 625.1+ KB
+```
+
+<p align="center">
+Just from visual analysis, we can see that every column besides Transaction ID had missing values.
+</p>
+
+ <p align="center">
+To begin filling in missing values, variables were created to be used in equations to solve for missing rows.
+ </p>
+
+ ```c++
+# Step 1: Calculate Differences
+tIDdiff = cafeData["Transaction ID"].count()
+idiff = cafeData["Item"].count()
+qdiff= cafeData["Quantity"].count()
+ppudiff = cafeData["Price Per Unit"].count()
+tsdiff = cafeData["Total Spent"].count()
+PMdiff = cafeData["Payment Method"].count()
+ldiff = cafeData["Location"].count()
+TDdiff = cafeData["Transaction Date"].count()
+diff1= 10000 - tIDdiff
+diff2 = 10000 - idiff
+diff3 = 10000 - qdiff
+diff4 = 10000 - ppudiff
+diff5 = 10000 - tsdiff
+diff6 = 10000 - PMdiff
+diff7 = 10000 - ldiff
+diff8 = 10000 - TDdiff
+print(f'Missing values for each column \n Transaction ID: {diff1}  \n Item: {diff2} \n Quantity: {diff3} \n Price Per Unit: {diff4} \n Total Spent: {diff5} \n Payment Method: {diff6} \n Location: {diff7} \n Transaction Date: {diff8}')
+```
+
+<p align="center">
+Next, converting rows and transforming the types of columns was needed in order to have a cleaner, organized dataset. To do this, functions were used to replace UNKNOWN and ERROR rows with blanks. 
+</p> 
+
+```c++
+# Replace Quantity Missing Values
+cafeData['Quantity'] = cafeData['Quantity'].replace('UNKNOWN', np.nan)
+cafeData['Quantity'] = cafeData['Quantity'].replace("ERROR", np.nan)
+cafeData['Quantity'] = cafeData['Quantity'].fillna(np.nan)
+
+# Replace PPU Missing Values
+cafeData[['Price Per Unit','Total Spent' ]] = cafeData[['Price Per Unit','Total Spent' ]].replace('UNKNOWN', np.nan)
+cafeData[['Price Per Unit','Total Spent' ]] = cafeData[['Price Per Unit','Total Spent' ]].replace("ERROR", np.nan)
+cafeData[['Price Per Unit','Total Spent' ]] = cafeData[['Price Per Unit','Total Spent' ]].fillna(np.nan)
+
+# Replace Transaction Date Missing Values
+cafeData['Transaction Date'] = cafeData['Transaction Date'].replace(['UNKNOWN', 'ERROR'], pd.NA)
+cafeData['Valid Date'] = cafeData['Transaction Date'].notna()
+cafeData['Transaction Date'] = pd.to_datetime(cafeData['Transaction Date'], errors='coerce')
+
+# Replace Item Missing Values
+cafeData['Item'] = cafeData['Item'].replace('UNKNOWN', "No Data")
+cafeData['Item'] = cafeData['Item'].replace("ERROR", "No Data")
+cafeData['Item'] = cafeData['Item'].replace("nan", "No Data")
+cafeData['Item'] = cafeData['Item'].fillna("No Data")
+
+cafeData[['Transaction ID','Item','Payment Method','Location']] = cafeData[['Transaction ID','Item','Payment Method','Location']].astype(str)
+cafeData['Quantity'] = cafeData['Quantity'].astype(float)
+cafeData[['Price Per Unit','Total Spent' ]] = cafeData[['Price Per Unit','Total Spent' ]].astype(float)
+cafeData['Transaction Date'] = pd.to_datetime(cafeData['Transaction Date'])
+cafeData.info()
+```
+
+All that was left to do after this was to use `IF` statements and `.loc` functions to fill in the remaining blank rows that could be filled in logically. The `IF` statements were used to sift through all the rows and fill them in using mathematical equations, given that there was data in the rows needed to solve them. Furthermore, `.loc` functions were used to define certain Prices per Unit (PPU) with their respective items, given that the item only had one possible PPU.
+
+```c++
+# Use PPU, Quantity, and Total Spent to calculate each other
+for index, row in cafeData.iterrows():
+    qty = row['Quantity']
+    ppu = row['Price Per Unit']
+    total = row['Total Spent']
+    
+
+    if (pd.isna(total) or total == 0) and qty > 0 and ppu > 0:
+        cafeData.at[index, 'Total Spent'] = qty * ppu
+    
+
+    elif (pd.isna(ppu) or ppu == 0) and qty > 0 and total > 0:
+        cafeData.at[index, 'Price Per Unit'] = total / qty
+
+
+    elif (pd.isna(qty) or qty == 0) and ppu > 0 and total > 0:
+        cafeData.at[index, 'Quantity'] = total / ppu
+
+# Defines Item by PPU
+cafeData.loc[cafeData['Price Per Unit'] == 1, 'Item'] = 'Cookie'
+cafeData.loc[cafeData['Price Per Unit'] == 1.5, 'Item'] = 'Tea'
+cafeData.loc[cafeData['Price Per Unit'] == 2, 'Item'] = 'Coffee'
+cafeData.loc[(cafeData['Item'] == 'No Data') & (cafeData['Price Per Unit'] == 3.0), 'Item'] = 'Cake, Juice'
+cafeData.loc[(cafeData['Item'] == 'No Data') & (cafeData['Price Per Unit'] == 4.0), 'Item'] = 'Sandwich, Smoothie'
+cafeData.loc[cafeData['Price Per Unit'] == 5, 'Item'] = 'Salad'
+
+#Defines PPU by Item
+
+cafeData.loc[cafeData['Item'] == 'Cookie', 'Price Per Unit'] = 1
+cafeData.loc[cafeData['Item'] == 'Tea', 'Price Per Unit'] = 1.5
+cafeData.loc[cafeData['Item'] == 'Coffee', 'Price Per Unit'] = 2
+cafeData.loc[cafeData['Item'] == 'Cake', 'Price Per Unit'] = 3
+cafeData.loc[cafeData['Item'] == 'Juice', 'Price Per Unit'] = 3
+cafeData.loc[cafeData['Item'] == 'Sandwich', 'Price Per Unit'] = 4
+cafeData.loc[cafeData['Item'] == 'Smoothie', 'Price Per Unit'] = 4
+cafeData.loc[cafeData['Item'] == 'Salad', 'Price Per Unit'] = 5
+
+# Use PPU, Quantity, and Total Spent to calculate each other
+for index, row in cafeData.iterrows():
+    qty = row['Quantity']
+    ppu = row['Price Per Unit']
+    total = row['Total Spent']
+    
+
+    if (pd.isna(total) or total == 0) and qty > 0 and ppu > 0:
+        cafeData.at[index, 'Total Spent'] = qty * ppu
+    
+
+    elif (pd.isna(ppu) or ppu == 0) and qty > 0 and total > 0:
+        cafeData.at[index, 'Price Per Unit'] = total / qty
+
+
+    elif (pd.isna(qty) or qty == 0) and ppu > 0 and total > 0:
+        cafeData.at[index, 'Quantity'] = total / ppu
+```
+
+<p align="center">
+This ensured the data was as clean as possible, using all possible logical mathematical equations to fill in missing rows.
+</p>
+
+***
 
 ## Key Findings
 - Summary stats (mean, median, etc.)
