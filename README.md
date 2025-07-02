@@ -1,5 +1,7 @@
 # Café Le Marcy Financial Analysis & Insights
 
+![](https://cdn.creazilla.com/cliparts/78103/coffee-shop-clipart-lg.png)
+
 **Work Done by:**
 
 - Rolando (Ro) Mancilla-Rojas
